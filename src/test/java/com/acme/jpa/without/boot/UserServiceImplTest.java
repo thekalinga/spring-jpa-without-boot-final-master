@@ -14,6 +14,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -21,8 +22,7 @@ class UserServiceImplTest {
   @Test
   void getAllUsersWithNamePrefix_ShouldReturnAllUsersWithPrefix(@Mock UserRepository userRepository) {
     List<User> users = asList(User.builder().id(1).name("Swasthik A").build(), User.builder().id(2).name("Swasthik B").build());
-
-    Mockito.when(userRepository.getAllUsersWithNamePrefix("Swast%")).thenReturn(users);
+    when(userRepository.getAllUsersWithNamePrefix("Swast%")).thenReturn(users);
 
     UserServiceImpl userService = new UserServiceImpl(userRepository);
     assertThat(userService.getAllUsersWithNamePrefix("Swast")).containsOnlyElementsOf(users);
